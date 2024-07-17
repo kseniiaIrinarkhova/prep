@@ -68,6 +68,21 @@ class BSTree {
             }
         }
     }
+    size(): number {
+        let nodeQueue: Array<BSTNode | null> = [this.root];
+        let size: number = 0;
+
+        while (nodeQueue.length) {
+            let currentNode = nodeQueue.shift();
+            if (currentNode) {
+                ++size;
+                nodeQueue.push(currentNode.left);
+                nodeQueue.push(currentNode.right);
+            }
+        }
+        return size;
+
+    }
 }
 
 
@@ -78,4 +93,5 @@ let testTree = new BSTree();
 testTree.createTree(inputValue, 0, inputValue.length - 1);
 console.log(testTree);
 console.log(testTree.traverse());
+console.log(testTree.size());
 
