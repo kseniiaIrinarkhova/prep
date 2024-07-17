@@ -83,6 +83,43 @@ class BSTree {
         return size;
 
     }
+    depth(): number {
+        type QueueNode = {
+            node: BSTNode | null;
+            depth: number
+        }
+        let depthQueue: QueueNode[] = [{ node: this.root, depth: 1 }];
+        let maxDepth: number = 0;
+        while (depthQueue.length) {
+            let currentNode: QueueNode = depthQueue.shift() as QueueNode;
+            if (currentNode.node) {
+                maxDepth = Math.max(maxDepth, currentNode.depth);
+                depthQueue.push({ node: currentNode.node.left, depth: currentNode.depth + 1 });
+                depthQueue.push({ node: currentNode.node.right, depth: currentNode.depth + 1 });
+            }
+        }
+
+        return maxDepth;
+    }
+    logTree(node?:BSTNode|null):void{
+        if(node){
+            console.log(node)
+            if(node.left){
+                this.logTree(node.left)
+            }
+            if(node.right){
+                this.logTree(node.right);
+            }
+
+        }else{
+            if(this.root){
+                this.logTree(this.root);
+            }
+            else{
+                console.log('Empty tree')
+            }
+        }
+    }
 }
 
 
@@ -94,4 +131,5 @@ testTree.createTree(inputValue, 0, inputValue.length - 1);
 console.log(testTree);
 console.log(testTree.traverse());
 console.log(testTree.size());
-
+testTree.logTree();
+console.log(testTree.depth());
