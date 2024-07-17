@@ -175,13 +175,55 @@ class BSTree {
             this.mirror(node.right);
         }
     }
-    doubleTree(node: BSTNode | null = this.root){
-        if(node !== null){
-            let newNode: BSTNode = {data:node.data, left:node.left, right:null};
+    doubleTree(node: BSTNode | null = this.root) {
+        if (node !== null) {
+            let newNode: BSTNode = { data: node.data, left: node.left, right: null };
             node.left = newNode;
             this.doubleTree(newNode.left);
             this.doubleTree(node.right);
         }
+    }
+    isBST(node: BSTNode | null = this.root): boolean {
+        let isBSTRecur = function (currentNode: BSTNode, minVal: number, maxVal: number): boolean {
+            console.log(`curent node: ${currentNode.data}, minVal=${minVal}, maxVal=${maxVal}`);
+            //check nodes
+            let nodeCheck: boolean = true;
+            let minMaxCheck: boolean = true;
+
+            if (currentNode.left) {
+                if (currentNode.left.data > currentNode.data) {
+                    nodeCheck = false;
+                }
+                if (currentNode.left.data < minVal) {
+                    minMaxCheck = false;
+                }
+            }
+            if (currentNode.right && nodeCheck && minMaxCheck) {
+                if (currentNode.right.data < currentNode.data) {
+                    nodeCheck = false;
+                }
+                if (currentNode.right.data > maxVal) {
+                    minMaxCheck = false;
+                }
+            }
+            console.log(`current node: ${currentNode.data}, nCh=${nodeCheck}, mmCh=${minMaxCheck}`);
+            if (!nodeCheck || !minMaxCheck) return false;
+            if (currentNode.left) {
+                let leftCheck: boolean = isBSTRecur(currentNode.left, minVal, currentNode.data);
+                if (leftCheck) {
+                    if (currentNode.right) {
+                        return isBSTRecur(currentNode.right, currentNode.data, maxVal);
+                    }
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            return true;
+
+        }
+        if(node === null) return false;
+        return isBSTRecur(node,-Infinity,Infinity);
     }
 
 }
@@ -206,11 +248,11 @@ let testTree = new BSTree();
 // testTree.printPaths();
 
 testTree = new BSTree();
-testTree.insertNode({data:4,left:null,right:null} as BSTNode, testTree.root);
-testTree.insertNode({data:2,left:null,right:null} as BSTNode, testTree.root);
-testTree.insertNode({data:5,left:null,right:null} as BSTNode, testTree.root);
-testTree.insertNode({data:1,left:null,right:null} as BSTNode, testTree.root);
-testTree.insertNode({data:3,left:null,right:null} as BSTNode, testTree.root);
+testTree.insertNode({ data: 4, left: null, right: null } as BSTNode, testTree.root);
+testTree.insertNode({ data: 2, left: null, right: null } as BSTNode, testTree.root);
+testTree.insertNode({ data: 5, left: null, right: null } as BSTNode, testTree.root);
+testTree.insertNode({ data: 1, left: null, right: null } as BSTNode, testTree.root);
+testTree.insertNode({ data: 3, left: null, right: null } as BSTNode, testTree.root);
 
 // testTree.printTree();
 // testTree.mirror();
@@ -219,5 +261,28 @@ testTree.logTree();
 // testTree.logTree();
 // console.log(testTree);
 // testTree.printPaths();
-testTree.doubleTree();
+// testTree.doubleTree();
+// testTree.logTree();
+
+function countTrees(numKeys: number): number {
+    let treeCount: number = 0;
+
+
+    return treeCount;
+}
+console.log(testTree.isBST());
+
+let node:BSTNode|null = testTree.root;
+if(node){
+    if(node.left)
+    {
+        if(node.left.right){
+            node.left.right.data = 6;
+            let newNode: BSTNode = {data:3,left:null,right:null}
+            node.left.right.left = newNode;
+        }
+    }
+    
+}
 testTree.logTree();
+console.log(testTree.isBST());
