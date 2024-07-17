@@ -175,6 +175,14 @@ class BSTree {
             this.mirror(node.right);
         }
     }
+    doubleTree(node: BSTNode | null = this.root){
+        if(node !== null){
+            let newNode: BSTNode = {data:node.data, left:node.left, right:null};
+            node.left = newNode;
+            this.doubleTree(newNode.left);
+            this.doubleTree(node.right);
+        }
+    }
 
 }
 
@@ -205,9 +213,11 @@ testTree.insertNode({data:1,left:null,right:null} as BSTNode, testTree.root);
 testTree.insertNode({data:3,left:null,right:null} as BSTNode, testTree.root);
 
 // testTree.printTree();
-testTree.mirror();
-// testTree.logTree();
+// testTree.mirror();
+testTree.logTree();
 // testTree.printTree();
 // testTree.logTree();
 // console.log(testTree);
 // testTree.printPaths();
+testTree.doubleTree();
+testTree.logTree();
