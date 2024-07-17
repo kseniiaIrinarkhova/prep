@@ -101,25 +101,72 @@ class BSTree {
 
         return maxDepth;
     }
-    logTree(node?:BSTNode|null):void{
-        if(node){
+    logTree(node?: BSTNode | null): void {
+        if (node) {
             console.log(node)
-            if(node.left){
+            if (node.left) {
                 this.logTree(node.left)
             }
-            if(node.right){
+            if (node.right) {
                 this.logTree(node.right);
             }
 
-        }else{
-            if(this.root){
+        } else {
+            if (this.root) {
                 this.logTree(this.root);
             }
-            else{
+            else {
                 console.log('Empty tree')
             }
         }
     }
+    printTree(node: BSTNode | null = this.root): void {
+        if (node) {
+            this.printTree(node.left);
+            console.log(`Node: ${node.data}`);
+            this.printTree(node.right);
+        }
+    }
+    hasSumPath(node: BSTNode | null = this.root, sum: number): boolean {
+        if (node === null) {
+            return (sum === 0) ? true : false;
+        } else {
+            if (node.data > sum) {
+                return false;
+            }
+            let leftCheck = this.hasSumPath(node.left, sum - node.data);
+            if (leftCheck) {
+                return true;
+            }
+            return this.hasSumPath(node.right, sum - node.data);
+        }
+
+    }
+
+    printPaths(node: BSTNode | null = this.root): void {
+        let printPathDP = function (path: number[], currentNode: BSTNode) {
+
+            path.push(currentNode.data)
+            if (currentNode.left === null && currentNode.right === null) {
+                console.log(path);
+                return;
+            } else {
+                if (currentNode.left !== null) {
+                    printPathDP([...path], currentNode.left);
+                }
+                if (currentNode.right !== null) {
+                    printPathDP([...path], currentNode.right);
+                }
+            }
+        }
+        if (node !== null) {
+            printPathDP([], node);
+        }
+        else {
+            console.log(`Tree is empty!`)
+        }
+    }
+
 }
 
 
@@ -131,5 +178,12 @@ testTree.createTree(inputValue, 0, inputValue.length - 1);
 console.log(testTree);
 console.log(testTree.traverse());
 console.log(testTree.size());
-testTree.logTree();
+// testTree.logTree();
 console.log(testTree.depth());
+// testTree.printTree();
+testTree = new BSTree();
+testTree.createTree([1, 2, 3, 4], 0, 3);
+// console.log(testTree.traverse());
+testTree.logTree();
+console.log(testTree.hasSumPath(testTree.root, 8));
+testTree.printPaths();
