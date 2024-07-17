@@ -166,24 +166,48 @@ class BSTree {
             console.log(`Tree is empty!`)
         }
     }
+    mirror(node: BSTNode | null = this.root) {
+        if (node !== null) {
+            let tmpNode: BSTNode | null = node.right;
+            node.right = node.left;
+            node.left = tmpNode;
+            this.mirror(node.left);
+            this.mirror(node.right);
+        }
+    }
 
 }
 
 
 
 //************************************************************************** */
-let inputValue: number[] = [1, 2, 3, 4, 5, 23, 7, 16];
+// let inputValue: number[] = [1, 2, 3, 4, 5, 23, 7, 16];
 let testTree = new BSTree();
-testTree.createTree(inputValue, 0, inputValue.length - 1);
-console.log(testTree);
-console.log(testTree.traverse());
-console.log(testTree.size());
-// testTree.logTree();
-console.log(testTree.depth());
-// testTree.printTree();
-testTree = new BSTree();
-testTree.createTree([1, 2, 3, 4], 0, 3);
+// testTree.createTree(inputValue, 0, inputValue.length - 1);
+// console.log(testTree);
 // console.log(testTree.traverse());
-testTree.logTree();
-console.log(testTree.hasSumPath(testTree.root, 8));
-testTree.printPaths();
+// console.log(testTree.size());
+// // testTree.logTree();
+// console.log(testTree.depth());
+// // testTree.printTree();
+// testTree = new BSTree();
+// testTree.createTree([1, 2, 3, 4], 0, 3);
+// // console.log(testTree.traverse());
+// // testTree.logTree();
+// console.log(testTree.hasSumPath(testTree.root, 8));
+// testTree.printPaths();
+
+testTree = new BSTree();
+testTree.insertNode({data:4,left:null,right:null} as BSTNode, testTree.root);
+testTree.insertNode({data:2,left:null,right:null} as BSTNode, testTree.root);
+testTree.insertNode({data:5,left:null,right:null} as BSTNode, testTree.root);
+testTree.insertNode({data:1,left:null,right:null} as BSTNode, testTree.root);
+testTree.insertNode({data:3,left:null,right:null} as BSTNode, testTree.root);
+
+// testTree.printTree();
+testTree.mirror();
+// testTree.logTree();
+// testTree.printTree();
+// testTree.logTree();
+// console.log(testTree);
+// testTree.printPaths();
