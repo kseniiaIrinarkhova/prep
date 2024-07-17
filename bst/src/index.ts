@@ -129,7 +129,7 @@ class BSTree {
     }
     hasSumPath(node: BSTNode | null = this.root, sum: number): boolean {
         if (node === null) {
-            return (sum === 0) ? true : false;
+            return (sum === 0) ;
         } else {
             if (node.data > sum) {
                 return false;
