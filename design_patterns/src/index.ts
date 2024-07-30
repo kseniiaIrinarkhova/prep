@@ -1,3 +1,5 @@
 import MiniDuckSimulator from "./strategy";
+import WeatherStation from "./observer";
 
-MiniDuckSimulator.main();
+// MiniDuckSimulator.main();
+WeatherStation.main();
